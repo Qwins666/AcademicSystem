@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.academic.mapper.ActivityParticipantMapper">
+
+    <resultMap id="BaseResultMap" type="com.academic.entity.ActivityParticipant">
+        <id column="id" property="id"/>
+        <result column="activity_id" property="activityId"/>
+        <result column="user_id" property="userId"/>
+        <result column="registration_time" property="registrationTime"/>
+        <result column="status" property="status"/>
+        <result column="certificate_url" property="certificateUrl"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, activity_id, user_id, registration_time, status, certificate_url
+    </sql>
+
+    <!-- 根据活动ID和用户ID查询是否已报名 -->
+    <select id="selectByActivityAndUser" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM activity_participant
+        WHERE activity_id = #{activityId} AND user_id = #{userId}
+    </select>
+
+    <!-- 根据活动ID查询所有参与者 -->
+    <select id="selectByActivityId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM activity_participant
+        WHERE activity_id = #{activityId}
+        ORDER BY registration_time DESC
+    </select>
+
+    <!-- 根据用户ID查询所有已报名活动 -->
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM activity_participant
+        WHERE user_id = #{userId}
+        ORDER BY registration_time DESC
+    </select>
+
+    <!-- 删除活动参与者记录 -->
+    <delete id="deleteByActivityAndUser">
+        DELETE FROM activity_participant
+        WHERE activity_id = #{activityId} AND user_id = #{userId}
+    </delete>
+
+    <!-- 更新参与者状态 -->
+    <update id="updateStatusByActivityAndUser">
+        UPDATE activity_participant
+        SET status = #{status}
+        WHERE activity_id = #{activityId} AND user_id = #{userId}
+    </update>
+    
+    <!-- 更新参与者证书URL -->
+    <update id="updateCertificateUrlByActivityAndUser">
+        UPDATE activity_participant
+        SET certificate_url = #{certificateUrl}
+        WHERE activity_id = #{activityId} AND user_id = #{userId}
+    </update>
+
+    <!-- 查询活动当前参与人数 -->
+    <select id="countByActivityId" resultType="java.lang.Integer">
+        SELECT COUNT(*) 
+        FROM activity_participant
+        WHERE activity_id = #{activityId}
+    </select>
+</mapper>

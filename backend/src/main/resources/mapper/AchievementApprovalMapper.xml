@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.academic.mapper.AchievementApprovalMapper">
+
+    <!-- 根据成果ID获取审核记录列表 -->
+    <select id="getByAchievementId" resultType="com.academic.entity.AchievementApproval">
+        SELECT * FROM achievement_approval 
+        WHERE achievement_id = #{achievementId}
+        ORDER BY approval_time ASC
+    </select>
+
+    <!-- 根据成果ID和审核级别获取审核记录 -->
+    <select id="getByAchievementIdAndLevel" resultType="com.academic.entity.AchievementApproval">
+        SELECT * FROM achievement_approval 
+        WHERE achievement_id = #{achievementId} 
+          AND approval_level = #{approvalLevel}
+        ORDER BY approval_time DESC
+        LIMIT 1
+    </select>
+
+</mapper>
