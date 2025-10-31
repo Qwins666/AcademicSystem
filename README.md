@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 学术活动与科研成果管理系统
 
 基于Spring Boot + MyBatis-Plus + Vue的学术活动与科研成果管理系统
@@ -65,3 +66,7 @@ npm run serve
 
 ## 数据库配置
 请先创建数据库并执行 `database/init.sql` 脚本初始化表结构。
+=======
+# AcademicSystem
+The system of academic activites and scientific research projects
+>>>>>>> c6acdb3c1a9a4e9964d0079389429289ca713c74
